@@ -24,7 +24,7 @@ public class ThirdPersonCamera : MonoBehaviour
         float newDistance = distance + Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * scrollSensitivity * distance;
         distance = Mathf.Clamp(newDistance, minimumScroll, maximumScroll);
 
-        Quaternion rotation = Quaternion.AngleAxis(pitch, transform.right);
+        Quaternion rotation = Quaternion.AngleAxis(pitch, target.right);
         Vector3 lookDirection = rotation * target.forward;
         Vector3 lookUp = rotation * target.up;
         float d = distance;
@@ -34,6 +34,6 @@ public class ThirdPersonCamera : MonoBehaviour
         }
         Vector3 cameraTarget = target.position - lookDirection * d;
         transform.position = Vector3.SmoothDamp(transform.position, cameraTarget, ref velocity, smoothTime);
-        transform.LookAt(target.position, Vector3.up);
+        transform.LookAt(target.position, lookUp);
     }
 }
